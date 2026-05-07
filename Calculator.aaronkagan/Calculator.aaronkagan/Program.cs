@@ -5,7 +5,6 @@ class Calculator
     public static double DoOperation(double num1, double num2, string op)
     {
         double result = double.NaN; 
-        
         switch (op)
         {
             case "a":
@@ -40,7 +39,6 @@ class Program
 
         while (!endApp)
         {
-            
             string? numInput1 = "";
             string? numInput2 = "";
             double result = 0;
@@ -76,23 +74,23 @@ class Program
 
             if (op == null || ! Regex.IsMatch(op, "[a|s|m|d]"))
             {
-               Console.WriteLine("Error: Unrecognized input.");
+                Console.WriteLine("Error: Unrecognized input.");
             }
             else
             { 
-               try
-               {
-                  result = Calculator.DoOperation(cleanNum1, cleanNum2, op);
-                  if (double.IsNaN(result))
-                  {
-                     Console.WriteLine("This operation will result in a mathematical error.\n");
-                  }
-                  else Console.WriteLine("Your result: {0:0.##}\n", result);
-               }
-               catch (Exception e)
-               {
-                   Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
-               }
+                try
+                {
+                    result = Calculator.DoOperation(cleanNum1, cleanNum2, op);
+                    if (double.IsNaN(result))
+                    {
+                        Console.WriteLine("This operation will result in a mathematical error.\n");
+                    }
+                    else Console.WriteLine("Your result: {0:0.##}\n", result);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+                }
             }
             Console.WriteLine("------------------------\n");
 
