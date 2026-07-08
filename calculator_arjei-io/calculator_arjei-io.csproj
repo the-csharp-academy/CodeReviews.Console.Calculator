@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CalculatorLibrary\CalculatorLibrary.csproj" />
+    <ProjectReference Include="..\CalculatorLibrary\calculatorLibrary_arjei-io.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../CalculatorLibrary/CalculatorLibrary.csproj" />
+  <Project Path="../CalculatorLibrary/calculatorLibrary_arjei-io.csproj" />
   <Project Path="calculator_arjei-io.csproj" />
 </Solution>
