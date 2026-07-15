@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../CalculatorLibrary/CalculatorLibrary.csproj" Id="eee0e9dc-ec6f-4263-8b3f-1504d649afce" />
   <Project Path="Calculator.Solomonlol.csproj" />
 </Solution>
