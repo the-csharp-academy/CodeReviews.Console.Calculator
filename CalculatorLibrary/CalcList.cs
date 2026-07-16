@@ -22,23 +22,24 @@ namespace CalculatorLibrary
                     history.Display();
                     Console.WriteLine("=============================================");
                 }
-                
-                Console.WriteLine("Press any key.");
-                
             }
             else
             {
-                Console.WriteLine("Not found any records.\nPress any key.");
-                
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Not found any records.\n");
+                Console.ResetColor();
             }
         }
         public static void Clear()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             if (calcHistory.Count > 0)
             {
                 calcHistory.Clear();
+                Console.WriteLine("All records were successfully deleted.");
             }
             else Console.WriteLine("Not found any records to delete.");
+            Console.ResetColor();
         }
     }
 }

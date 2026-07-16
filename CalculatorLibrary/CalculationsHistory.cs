@@ -26,6 +26,7 @@ namespace CalculatorLibrary
 
         public void Display()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             if (SecondNumber != null)
             {
                 Console.WriteLine($"First number: {FirstNumber}, second number:{SecondNumber}\n" +
@@ -33,6 +34,7 @@ namespace CalculatorLibrary
             }
             else Console.WriteLine($"Number: {FirstNumber}\n" +
                     $"Operation: {Operation}\nResult:{Result}");
+            Console.ResetColor();
         }
     }
 }

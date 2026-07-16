@@ -66,6 +66,12 @@ namespace CalculatorLibrary
             writer.WriteEndObject();
 
             SaveHistory(num1, num2, op, result);
+            if (result > double.MaxValue)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The result of the operation is too large.");
+                Console.ResetColor();
+            }
             return result;
         }
         public double DoOperation(double num1, string op)
@@ -94,6 +100,12 @@ namespace CalculatorLibrary
             writer.WriteEndObject();
 
             SaveHistory(num1, op, result);
+            if (result > double.MaxValue)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The result of the operation is too large.");
+                Console.ResetColor();
+            }
             return result;
         }
         

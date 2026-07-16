@@ -39,15 +39,17 @@ namespace CalculatorProgram
                 string? op = Console.ReadLine();
 
                 // Validate input is not null, and matches the pattern
-                if (op == null || !Regex.IsMatch(op, "[a|s|m|d|h|z|q|p|t]"))
+                if (op == null || !Regex.IsMatch(op, "^[a|s|m|d|h|z|q|p|t]$"))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error: Unrecognized input.");
+                    Console.ResetColor();
                 }
-                else if(Regex.IsMatch(op, "[h]"))
+                else if(Regex.IsMatch(op, "^[h]$"))
                 {
                     calculator.ShowHistory();
                 }
-                else if (Regex.IsMatch(op, "[z]"))
+                else if (Regex.IsMatch(op, "^[z]$"))
                 {
                     calculator.DeleteHistory();
                 }
@@ -59,7 +61,9 @@ namespace CalculatorProgram
                     }
                     catch (Exception e)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+                        Console.ResetColor();
                     }
                 }
                 Console.WriteLine("------------------------\n");
@@ -92,7 +96,7 @@ namespace CalculatorProgram
                 Console.Write("This is not valid input. Please enter an integer value: ");
                 numInput1 = Console.ReadLine();
             }
-            if (!Regex.IsMatch(op, "[q|t]"))
+            if (!Regex.IsMatch(op, "^[q|t]$"))
                 {
                 // Ask the user to type the second number.
                 Console.Write("Type another number, and then press Enter: ");
