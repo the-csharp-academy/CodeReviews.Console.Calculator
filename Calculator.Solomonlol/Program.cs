@@ -39,7 +39,7 @@ namespace CalculatorProgram
                 string? op = Console.ReadLine();
 
                 // Validate input is not null, and matches the pattern
-                if (op == null || !Regex.IsMatch(op, "^[a|s|m|d|h|z|q|p|t]$"))
+                if (op == null || !Regex.IsMatch(op, "^[asmdhzqpt]$"))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error: Unrecognized input.");
@@ -96,7 +96,7 @@ namespace CalculatorProgram
                 Console.Write("This is not valid input. Please enter an integer value: ");
                 numInput1 = Console.ReadLine();
             }
-            if (!Regex.IsMatch(op, "^[q|t]$"))
+            if (!Regex.IsMatch(op, "^[qt]$"))
                 {
                 // Ask the user to type the second number.
                 Console.Write("Type another number, and then press Enter: ");
