@@ -3,8 +3,8 @@
     {
       "operand1": 23.0,
       "opearand2": 23.0,
-      "opearation": "Add",
-      "Result": 46.0
+      "opearation": "Division",
+      "Result": 1.0
     }
   ]
 }

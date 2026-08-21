@@ -5,13 +5,14 @@ class Program
     static void Main(string[] args)
     {
         bool endApp = false;
-        Calculator calculator = new Calculator();
         // Display title as the C# console calculator app.
         Console.WriteLine("Console Calculator in C#\r");
         Console.WriteLine("------------------------\n");
 
         while (!endApp)
         {
+            Calculator calculator = new Calculator();
+            
             // Declare variables and set to empty.
             // Use Nullable types (with ?) to match type of System.Console.ReadLine
             string? numInput1 = "";
