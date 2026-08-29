@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Calculator.DzemalKurtic/Calculator.DzemalKurtic.csproj" />
+  <Project Path="CalculatorLibrary/CalculatorLibrary.csproj" Id="43d1763c-c7ed-49ad-ba85-9135a38ad884" />
+</Solution>
