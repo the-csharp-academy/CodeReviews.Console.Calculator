@@ -46,7 +46,7 @@ namespace CalculatorLibrary
                         writer.WriteValue("Divide");
                     }
                     break;
-            }
+            } 
 
             writer.WritePropertyName("Result");
             writer.WriteValue(result);
