@@ -1,0 +1,23 @@
+{
+  "Operations": [
+    {
+      "Operand1": 10.0,
+      "Operand2": 20.0,
+      "Operation": "Add",
+      "Result": 30.0
+    },
+    {
+      "Operand1": 30.0,
+      "Operand2": 20.0,
+      "Operation": "Add",
+      "Result": 50.0
+    },
+    {
+      "Operand1": 50.0,
+      "Operand2": 10.0,
+      "Operation": "Subtract",
+      "Result": 40.0
+    }
+  ],
+  "TotalCallCount": 3
+}
