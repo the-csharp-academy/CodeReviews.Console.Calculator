@@ -1,4 +1,4 @@
-﻿namespace CodeReviews.Console.Calculator;
+﻿namespace Calculator.Console;
 
 class Program
 {

@@ -1,4 +1,4 @@
-namespace CodeReviews.Console.Calculator;
+namespace Calculator.Console;
 using Console = System.Console;
 
 public static class AskUser

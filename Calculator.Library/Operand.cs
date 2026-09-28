@@ -1,7 +1,8 @@
+﻿namespace Calculator.Library;
+
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace CodeReviews.Console.Calculator;
 
 public enum Operand
 {

@@ -1,4 +1,6 @@
-namespace CodeReviews.Console.Calculator;
+using Calculator.Library;
+
+namespace Calculator.Console;
 using Console = System.Console;
 
 public static class UserInterface
@@ -10,6 +12,7 @@ public static class UserInterface
     // Here we would rather override the file each time 
     private const string LogName = "calculator.log";
     private static readonly Logger Logs = new Logger(LogName);
+    private static readonly JsonLogger JsonLogs = new JsonLogger();
     
     public static void Start()
     {
@@ -19,7 +22,7 @@ public static class UserInterface
         while (!endApp)
         {
             _num1 = AskUserANumber();
-            Operator op = AskUserOperand();
+            Library.Operator op = AskUserOperand();
             // For some operation, only one number is needed, take the value of num1 for easier print
             _num2 = (op.AmountInput() > 1) ? AskUserANumber("second") : _num1;
 
@@ -35,6 +38,7 @@ public static class UserInterface
         }
         
         Logs.Dispose();
+        JsonLogs.Dispose();
     }
     
     private static void Intro()
@@ -50,9 +54,9 @@ public static class UserInterface
             [$"Type the {amount} number, and press ENTER"]);
     }
 
-    private static Operator AskUserOperand()
+    private static Library.Operator AskUserOperand()
     {
-        return AskUser.Ask<Operator>(
+        return AskUser.Ask<Library.Operator>(
             ["Choose an option from the following list",
                 "\t+ - Add",
                 "\t- - Subtract",
@@ -64,11 +68,12 @@ public static class UserInterface
                 "\tsin - Sinus"]);
     }
 
-    private static void PrintResult(Operator op)
+    private static void PrintResult(Library.Operator op)
     {
         double result = op.Result(_num1, _num2);
         Console.WriteLine($"Your result: {(op.AmountInput() > 1 ? _num1 : "")} {op.GetSymbol()} {_num2} = {result}");
         Logs.Result(_num1, _num2, op, result);
+        JsonLogs.LogResult(_num1, _num2, op, result);
     }
 
     private static bool AskCloseApp()
@@ -78,6 +83,7 @@ public static class UserInterface
         if (input == "d")
         {
             Logs.DeleteLogs();
+            JsonLogs.DeleteLogs();
             return AskCloseApp();
         }
         return (input == "n");

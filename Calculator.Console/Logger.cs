@@ -1,4 +1,4 @@
-namespace CodeReviews.Console.Calculator;
+namespace Calculator.Console;
 using System.Diagnostics;
 
 public class Logger : IDisposable
@@ -38,7 +38,7 @@ public class Logger : IDisposable
         }
     }
 
-    public void Result(double n1, double n2, Operator op, double result)
+    public void Result(double n1, double n2, Library.Operator op, double result)
     {
         if (_logFile == null)
         {
