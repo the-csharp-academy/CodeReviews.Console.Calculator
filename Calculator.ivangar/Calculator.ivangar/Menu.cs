@@ -75,11 +75,6 @@ namespace Calculator.ivangar
             return cleanNum1;
         }
 
-        public static void PrintError(string message)
-        {
-            Console.WriteLine("This operation will result in a mathematical error.\n");
-        }
-
         public static bool ValidateOperationChoice(string? option)
         {
             if (string.IsNullOrEmpty(option) || string.IsNullOrWhiteSpace(option) || option.Length != 1)

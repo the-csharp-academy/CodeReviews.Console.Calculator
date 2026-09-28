@@ -93,11 +93,11 @@ namespace Calculator.ivangar
                 var result = Calculator.DoOperation(operand1, operation, operand2);
 
                 if (double.IsNaN(result))
-                    Menu.PrintError("This operation will result in a mathematical error.\n");
+                    Console.WriteLine("This operation will result in a mathematical error.\n");
             }
             catch (Exception e)
             {
-                Menu.PrintError("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+                Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
             }
         }
 
@@ -110,11 +110,11 @@ namespace Calculator.ivangar
                 var result = Calculator.DoOperation(radicand, operation);
 
                 if (double.IsNaN(result))
-                    Menu.PrintError("This operation will result in a mathematical error.\n");
+                    Console.WriteLine("This operation will result in a mathematical error.\n");
             }
             catch (Exception e)
             {
-                Menu.PrintError("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+                Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
             }
         }
 
@@ -128,11 +128,11 @@ namespace Calculator.ivangar
                 var result = Calculator.DoOperation(baseOperand, operation, exponent);
 
                 if (double.IsNaN(result))
-                    Menu.PrintError("This operation will result in a mathematical error.\n");
+                    Console.WriteLine("This operation will result in a mathematical error.\n");
             }
             catch (Exception e)
             {
-                Menu.PrintError("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+                Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
             }
         }
 
@@ -148,11 +148,11 @@ namespace Calculator.ivangar
                 var result = Calculator.DoTrigonometryOperation(degrees, function, operation);
 
                 if (double.IsNaN(result))
-                    Menu.PrintError("This operation will result in a mathematical error.\n");
+                    Console.WriteLine("This operation will result in a mathematical error.\n");
             }
             catch (Exception e)
             {
-                Menu.PrintError("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+                Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
             }
         }
     }

@@ -1,79 +1,83 @@
 ﻿using CalculatorLibrary.Enums;
 using CalculatorLibrary.Logging;
-using CalculatorLibrary.Models;
 
 namespace CalculatorLibrary
 {
     public class CalculatorEngine
     {
         private readonly CalculatorLogWriter _log;
-        private readonly List<MathOperation> _operations = new();
-        private int _operationCount = 0;
-        private bool SuccessfullOperation = true;
+        private readonly OperationRepository _operationRepository;
 
         public CalculatorEngine()
         {
             _log = new CalculatorLogWriter();
+            _operationRepository = new OperationRepository();
         }
 
         public double DoOperation(double num1, string op, double num2 = 0)
         {
             double result = double.NaN;
             char operation = default;
+            bool successfullOperation = true;
 
             switch (op)
             {
                 case "a":
                     operation = '+';
                     result = num1 + num2;
-                    AddBasicOperation(num1, num2, operation, result);
+                    var sum = OperationFactory.CreateBasic(num1, num2, operation, result);
+                    _operationRepository.Add(sum);
                     break;
                 case "s":
                     operation = '-';
                     result = num1 - num2;
-                    AddBasicOperation(num1, num2, operation, result);
+                    var subtraction = OperationFactory.CreateBasic(num1, num2, operation, result);
+                    _operationRepository.Add(subtraction);
                     break;
                 case "m":
                     operation = '*';
                     result = num1 * num2;
-                    AddBasicOperation(num1, num2, operation, result);
+                    var multiplication = OperationFactory.CreateBasic(num1, num2, operation, result);
+                    _operationRepository.Add(multiplication);
                     break;
                 case "d":
                     operation = '/';
-                    if (TryDivide(num1, num2, out result))
+                    if (CalculatorMath.TryDivide(num1, num2, out result))
                     {
-                        AddBasicOperation(num1, num2, operation, result);
+                        var division = OperationFactory.CreateBasic(num1, num2, operation, result);
+                        _operationRepository.Add(division);
                     }
                     else
-                        SuccessfullOperation = false;
+                        successfullOperation = false;
                     break;
                 case "r":
                     operation = '√';
-                    if (TryCalculateSquareRoot(num1, out result))
+                    if (CalculatorMath.TryCalculateSquareRoot(num1, out result))
                     {
-                        AddSquareRootOperation(num1, operation, result);
+                        var squareRoot = OperationFactory.CreateSquareRoot(num1, operation, result);
+                        _operationRepository.Add(squareRoot);
                     }
                     else
-                        SuccessfullOperation = false;
+                        successfullOperation = false;
                     break;
                 case "p":
                     operation = '^';
-                    if (TryCalculateExponent(num1, num2, out result))
+                    if (CalculatorMath.TryCalculateExponent(num1, num2, out result))
                     {
-                        AddPowerOperation(num1, num2, operation, result);
+                        var power = OperationFactory.CreateExponentiation(num1, num2, operation, result);
+                        _operationRepository.Add(power);
                     }
                     else
-                        SuccessfullOperation = false;
+                        successfullOperation = false;
                     break;
                 default:
                     Console.WriteLine("This operation does not exist");
-                    SuccessfullOperation = false;
+                    successfullOperation = false;
                     break;
             }
 
-            if (SuccessfullOperation)
+            if (successfullOperation)
             {
-                _operationCount++;
                 if (operation == '√')
                     _log.WriteOperation(num1, operation, result);
                 else
@@ -88,10 +92,11 @@ namespace CalculatorLibrary
             double result = double.NaN;
             char operation = '°';
 
-            if (TryCalculateTrygonometry(degrees, function, out result))
+            if (CalculatorMath.TryCalculateTrigonometry(degrees, function, out result))
             {
                 _log.WriteTrigOperation(degrees, operation, function, result);
-                AddTrigOperation(degrees, function, operation, result);
+                var trigOperation = OperationFactory.CreateTrigonometry(degrees, function, operation, result);
+                _operationRepository.Add(trigOperation);
             }
 
             return result;
@@ -100,165 +105,19 @@ namespace CalculatorLibrary
         public void Finish()
         {
             _log.Dispose();
-            PrintAllOperations();
-        }
-
-        public void CountOperations()
-        {
-            var countTimes = _operationCount == 1 ? "time" : "times";
-            Console.WriteLine($"\nThe calculator was used {_operations.Count} {countTimes}.\n");
+            _operationRepository.PrintAll();
         }
 
         public void PrintAllOperations()
         {
-            CountOperations();
-
-            if (_operations.Count != 0)
-            {
-                Console.WriteLine("Latest calculations:\n");
-
-                foreach (var (index, operation) in _operations.Select((o, i) => (i, o)))
-                {
-                    Console.WriteLine($"{index + 1}. {operation}");
-                }
-            }
-
-            else
-                Console.WriteLine("\nThere are no calculations to display:\n");
+            _operationRepository.PrintAll();
         }
 
         public void DeleteOperations()
         {
             Console.WriteLine("\nDeleting all current operations:\n");
-            _operations.Clear();
+            _operationRepository.Clear();
             _log.DeleteOperations();
-        }
-
-        private void AddBasicOperation(double num1, double num2, char op, double result)
-        {
-            var operation = new MathOperation
-            {
-                OperandA = num1,
-                OperandB = num2,
-                Operation = op,
-                Result = result
-            };
-
-            _operations.Add(operation);
-            Console.WriteLine($"Operation: {operation}\n");
-        }
-
-        private void AddSquareRootOperation(double radicand, char op, double result)
-        {
-            var operation = new SquareRoot
-            {
-                Radicand = radicand,
-                Operation = op,
-                Result = result
-            };
-
-            _operations.Add(operation);
-            Console.WriteLine($"Operation: {operation}\n");
-        }
-
-        private void AddPowerOperation(double baseNumber, double exponent, char op, double result)
-        {
-            var operation = new Exponentiation
-            {
-                Base = baseNumber,
-                Exponent = exponent,
-                Operation = op,
-                Result = result
-            };
-
-            _operations.Add(operation);
-            Console.WriteLine($"Operation: {operation}\n");
-        }
-
-        private void AddTrigOperation(double degrees, TrigonometryFunctions function, char op, double result)
-        {
-            var operation = new TrigonometryOperation
-            {
-                Degrees = degrees,
-                Function = function,
-                Operation = op,
-                Result = result
-            };
-
-            _operations.Add(operation);
-            Console.WriteLine($"Operation: {operation}\n");
-        }
-
-        private bool TryDivide(double num1, double num2, out double result)
-        {
-            if (num2 == 0)
-            {
-                Console.WriteLine("Cannot divide by zero.");
-                result = default;
-                return false;
-            }
-            else
-            {
-                result = num1 / num2;
-                return true;
-            }
-        }
-
-        private bool TryCalculateSquareRoot(double radicand, out double result)
-        {
-            if (radicand < 0)
-            {
-                Console.WriteLine("Cannot compute square root of a negative number.");
-                result = default;
-                return false;
-            }
-            else
-            {
-                result = Math.Round(Math.Sqrt(radicand), 2, MidpointRounding.AwayFromZero);
-                return true;
-            }
-
-        }
-
-        private bool TryCalculateExponent(double baseNumber, double exponent, out double result)
-        {
-            if (exponent > 10)
-            {
-                Console.WriteLine("The exponent is very big, try a smaller number");
-                result = default;
-                return false;
-            }
-
-            else
-            {
-                result = Math.Pow(baseNumber, exponent);
-                return true;
-            }
-        }
-
-        private bool TryCalculateTrygonometry(double degrees, TrigonometryFunctions function, out double result)
-        {
-            if (degrees > 360 || degrees < -360)
-            {
-                Console.WriteLine("The degree value is outside of this scope, try a smaller number");
-                result = default;
-                return false;
-            }
-
-            else
-            {
-                var radians = degrees * (Math.PI / 180);
-
-                result = function switch
-                {
-                    TrigonometryFunctions.Sin => Math.Round(Math.Sin(radians), 4),
-                    TrigonometryFunctions.Cos => Math.Round(Math.Cos(radians), 4),
-                    TrigonometryFunctions.Tan => Math.Round(Math.Tan(radians), 4),
-                    _ => throw new ArgumentOutOfRangeException(nameof(function))
-                };
-
-                return true;
-            }
         }
     }
 }
