@@ -18,10 +18,9 @@ namespace CalculatorLibrary
 
         public double DoOperation(double num1, string op, double num2 = 0)
         {
-            double result = double.NaN; // Default value is "not-a-number" if an operation, such as division, could result in an error.
+            double result = double.NaN;
             char operation = default;
 
-            // Use a switch statement to do the math.
             switch (op)
             {
                 case "a":
@@ -91,7 +90,7 @@ namespace CalculatorLibrary
 
             if (TryCalculateTrygonometry(degrees, function, out result))
             {
-                _log.WriteOperation(degrees, operation, result);
+                _log.WriteTrigOperation(degrees, operation, function, result);
                 AddTrigOperation(degrees, function, operation, result);
             }
 

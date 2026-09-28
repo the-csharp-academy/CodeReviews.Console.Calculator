@@ -1,4 +1,5 @@
-﻿using System.Text.Encodings.Web;
+﻿using CalculatorLibrary.Enums;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace CalculatorLibrary.Logging
@@ -32,9 +33,12 @@ namespace CalculatorLibrary.Logging
             WriteResult(result);
         }
 
-        public void WriteOperationSymbol(char symbol)
+        public void WriteTrigOperation(double operand1, char symbol, TrigonometryFunctions function, double result)
         {
-            _writer.WriteStringValue(symbol.ToString());
+            _writer.WriteStartObject();
+            _writer.WriteNumber("Operand1", operand1);
+            _writer.WriteString("Operation", $"{function}{symbol}");
+            WriteResult(result);
         }
 
         public void WriteResult(double result)
@@ -49,7 +53,6 @@ namespace CalculatorLibrary.Logging
             Dispose();
             _stream.Dispose();
 
-            // Read existing JSON to check if operations exist
             string json = File.ReadAllText(_filePath);
 
             using var doc = JsonDocument.Parse(json);
@@ -58,14 +61,13 @@ namespace CalculatorLibrary.Logging
             if (!root.TryGetProperty("Operations", out var ops) || ops.GetArrayLength() == 0)
             {
                 Console.WriteLine("No operations to delete.");
-                InitializeWriter();   // reopen writer so logging continues
+                InitializeWriter();
                 return;
             }
 
             Console.WriteLine("Deleting all operations from log file.");
 
             EmptyOperations();
-            InitializeWriter();
         }
 
         public void Finish()
@@ -83,24 +85,24 @@ namespace CalculatorLibrary.Logging
         // Rewrite file with empty Operations array
         private void EmptyOperations()
         {
-            using var stream = new FileStream(_filePath, FileMode.Create, FileAccess.Write, FileShare.None);
             var options = new JsonWriterOptions
             {
                 Indented = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
 
-            using var newWriter = new Utf8JsonWriter(stream, options);
+            using (var stream = new FileStream(_filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                using var newWriter = new Utf8JsonWriter(stream, options);
 
-            newWriter.WriteStartObject();
-            newWriter.WritePropertyName("Operations");
-            newWriter.WriteStartArray();
-            newWriter.WriteEndArray();
-            newWriter.WriteEndObject();
+                newWriter.WriteStartObject();
+                newWriter.WritePropertyName("Operations");
+                newWriter.WriteStartArray();
+                newWriter.WriteEndArray();
+                newWriter.WriteEndObject();
 
-            newWriter.Flush();
-
-            Dispose();
+                newWriter.Flush();
+            }
 
             InitializeWriter();
         }
@@ -118,7 +120,6 @@ namespace CalculatorLibrary.Logging
 
             _writer = new Utf8JsonWriter(_stream, options);
 
-            // Move writer to the end of the Operations array
             _writer.WriteStartObject();
             _writer.WritePropertyName("Operations");
             _writer.WriteStartArray();
