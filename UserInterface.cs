@@ -5,6 +5,12 @@ public static class UserInterface
 {
     private static double _num1;
     private static double _num2;
+    
+    // Could add timestamps in the name for persistent logs
+    // Here we would rather override the file each time 
+    private const string LogName = "calculator.log";
+    private static readonly Logger Logs = new Logger(LogName);
+    
     public static void Start()
     {
         bool endApp = false;
@@ -13,18 +19,22 @@ public static class UserInterface
         while (!endApp)
         {
             _num1 = AskUserANumber();
-            _num2 = AskUserANumber("second");
             Operator op = AskUserOperand();
+            // For some operation, only one number is needed, take the value of num1 for easier print
+            _num2 = (op.AmountInput() > 1) ? AskUserANumber("second") : _num1;
+
             try
             {
                 PrintResult(op);
             }
-            catch (DivideByZeroException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
             endApp = AskCloseApp();
         }
+        
+        Logs.Dispose();
     }
     
     private static void Intro()
@@ -47,17 +57,29 @@ public static class UserInterface
                 "\t+ - Add",
                 "\t- - Subtract",
                 "\t* - Multiply",
-                "\t/ - Divide"]);
+                "\t/ - Divide",
+                "\tsqrt - Square root",
+                "\t^ - Power",
+                "\tcos - Cosinus",
+                "\tsin - Sinus"]);
     }
 
     private static void PrintResult(Operator op)
     {
-        Console.WriteLine($"Your result: {_num1} {op.GetSymbol()} {_num2} = {op.Result(_num1, _num2)}");
+        double result = op.Result(_num1, _num2);
+        Console.WriteLine($"Your result: {(op.AmountInput() > 1 ? _num1 : "")} {op.GetSymbol()} {_num2} = {result}");
+        Logs.Result(_num1, _num2, op, result);
     }
 
     private static bool AskCloseApp()
     {
-        Console.WriteLine("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-        return (Console.ReadLine() == "n");
+        Console.WriteLine("Press 'n' and Enter to close the app, or press 'd' and Enter to delete the logs or press any other key and Enter to continue: ");
+        string? input = Console.ReadLine();
+        if (input == "d")
+        {
+            Logs.DeleteLogs();
+            return AskCloseApp();
+        }
+        return (input == "n");
     }
 }

@@ -23,7 +23,7 @@ public static class AskUser
         } while (!isValidOption);
 
         // isValidOption is true when result get correctly parsed so != null
-        return result;
+        return result!;
     }
 
 }
