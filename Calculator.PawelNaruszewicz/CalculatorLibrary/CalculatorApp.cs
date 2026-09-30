@@ -16,8 +16,6 @@ namespace CalculatorLibrary
         }
         public void DoOperation(char operation)
         {
-            //KINDA BAD TO HAVE 2 SIMILAR METHODS, BETTER SOLUTION HERE FOR THIS
-            //BETTER SECURE 0 IN DIVIDE - NOT TO DISPLAY / NOT TO BE ADDED TO RESULT LIST 
             _leftNumber = ValidateNumberFromInput("Type a number, and then press Enter: ");
             _rightNumber = ValidateNumberFromInput("Type a number, and then press Enter: ");
             IOperation chosenOperation = GetChoiceOfOperation(operation);
@@ -31,6 +29,7 @@ namespace CalculatorLibrary
         }
         public void DoOperation(double leftNumber, char operation)
         {
+            _leftNumber = leftNumber;
             _rightNumber = ValidateNumberFromInput("Type a number, and then press Enter: ");
             IOperation chosenOperation = GetChoiceOfOperation(operation);
             Result = chosenOperation.Execute(_leftNumber, _rightNumber);

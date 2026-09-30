@@ -16,7 +16,7 @@
         }
         public char DisplayMainMenu()
         {
-            char[] availableChoices = new char[] { '1', '2', '3', '4', 'n'};
+            char[] availableChoices = new char[] { '1', '2', '3', '4', 'n' };
 
             Console.WriteLine("Here are the available options");
             Console.WriteLine("Press 1 to start new operation");
@@ -25,25 +25,34 @@
             Console.WriteLine("Press 4 to use one of of latest results in new operation");
             Console.WriteLine("Or press 'n' to close the appliaction");
 
-            char chosenOption  = GetPlayerChoice(availableChoices);
+            char chosenOption = GetPlayerChoice(availableChoices);
             return chosenOption;
 
         }
         private char GetPlayerChoice(char[] availableChoices)
         {
-            while(true)
+            while (true)
             {
-                char input = Console.ReadLine()[0];
+                char inputAsChar = '0';
+                string input = Console.ReadLine();
 
-                if (availableChoices.Contains(input))
+                if (!string.IsNullOrWhiteSpace(input))
                 {
-                    return input;
+                    inputAsChar = input[0];
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input.");
+                    continue;
+                }
+                if (availableChoices.Contains(inputAsChar))
+                {
+                    return inputAsChar;
                 }
                 else
                 {
                     Console.WriteLine("Invalid input.");
                 }
-
             }
 
         }

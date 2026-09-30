@@ -25,7 +25,7 @@
                 return;
             }
 
-            for(int i = 0; i< latestCalculations.Count; i++)
+            for (int i = 0; i < latestCalculations.Count; i++)
             {
                 Console.WriteLine($"{i} - {latestCalculations[i]}");
             }
@@ -34,11 +34,11 @@
         {
             DisplayLatestCalculation();
             Console.WriteLine("Choose which one you want");
-            while(true)
+            while (true)
             {
-                if(int.TryParse(Console.ReadLine(), out int Y))
+                if (int.TryParse(Console.ReadLine(), out int Y))
                 {
-                    if (Y <= latestResults.Count) return Y;
+                    if (Y <= latestResults.Count - 1 && Y >= 0) return latestResults[Y];
                 }
             }
         }

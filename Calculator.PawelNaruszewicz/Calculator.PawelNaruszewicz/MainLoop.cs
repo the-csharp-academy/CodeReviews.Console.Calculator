@@ -9,7 +9,6 @@ namespace Calculator.PawelNaruszewicz
 
         public void Run()
         {
-
             Console.WriteLine("Console Calculator in C#\r");
             Console.WriteLine("------------------------\n");
 
@@ -55,7 +54,7 @@ namespace Calculator.PawelNaruszewicz
                 Console.WriteLine("\nPress any button to continue");
                 Console.ReadKey();
 
-                Console.WriteLine("------------------------\n");
+                Console.WriteLine("\n------------------------\n");
             }
             calculator.JsonLogger.Finish();
             Console.WriteLine($"You've used the calculator {calculator.numberOfCalculations} amount of times!");
