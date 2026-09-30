@@ -20,7 +20,6 @@ namespace Calculator.PawelNaruszewicz
                 switch (chosenAction)
                 {
                     case '1':
-                        //TO DO - MOVE CHOSING OPERATION TO AFTER NUMBERS? AS IT WAS DONE BEFORE?
                         char chosenOperation = menuDisplay.GetChoiceOfOperation();
                         calculator.DoOperation(chosenOperation);
                         break;

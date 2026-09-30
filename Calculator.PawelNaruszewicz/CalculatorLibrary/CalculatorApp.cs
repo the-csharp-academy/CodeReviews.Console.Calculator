@@ -5,8 +5,6 @@ namespace CalculatorLibrary
     public class CalculatorApp
     {
         public int numberOfCalculations { get; private set; }
-        private double _leftNumber = 0;
-        private double _rightNumber = 0;
         public double Result = 0;
         public JsonLogger JsonLogger = new JsonLogger();
         public OperationLogger OperationLogger = new OperationLogger();
@@ -16,26 +14,39 @@ namespace CalculatorLibrary
         }
         public void DoOperation(char operation)
         {
-            _leftNumber = ValidateNumberFromInput("Type a number, and then press Enter: ");
-            _rightNumber = ValidateNumberFromInput("Type a number, and then press Enter: ");
             IOperation chosenOperation = GetChoiceOfOperation(operation);
-            Result = chosenOperation.Execute(_leftNumber, _rightNumber);
 
-            OperationLogger.LogOperation(_leftNumber, _rightNumber, Result, chosenOperation);
-            JsonLogger.LogOperation(_leftNumber, _rightNumber, Result, chosenOperation);
+            double[] inputs = new double[chosenOperation.RequiredArguments];
+
+            for (int i = 0; i < chosenOperation.RequiredArguments; i++)
+            {
+                inputs[i] = ValidateNumberFromInput($"Type number {i + 1} and then press Enter");
+            }
+
+            Result = chosenOperation.Execute(inputs);
+
+            OperationLogger.LogOperation(Result, chosenOperation, inputs);
+            JsonLogger.LogOperation(Result, chosenOperation, inputs);
             numberOfCalculations++;
 
             Console.WriteLine($"Result of {chosenOperation.Name} is {Result}");
         }
         public void DoOperation(double leftNumber, char operation)
         {
-            _leftNumber = leftNumber;
-            _rightNumber = ValidateNumberFromInput("Type a number, and then press Enter: ");
             IOperation chosenOperation = GetChoiceOfOperation(operation);
-            Result = chosenOperation.Execute(_leftNumber, _rightNumber);
 
-            OperationLogger.LogOperation(_leftNumber, _rightNumber, Result, chosenOperation);
-            JsonLogger.LogOperation(_leftNumber, _rightNumber, Result, chosenOperation);
+            double[] inputs = new double[chosenOperation.RequiredArguments];
+            inputs[0] = leftNumber;
+
+            for (int i = 1; i < chosenOperation.RequiredArguments; i++)
+            {
+                inputs[i] = ValidateNumberFromInput($"Type number {i + 1} and then press Enter");
+            }
+
+            Result = chosenOperation.Execute(inputs);
+
+            OperationLogger.LogOperation(Result, chosenOperation, inputs);
+            JsonLogger.LogOperation(Result, chosenOperation, inputs);
             numberOfCalculations++;
 
             Console.WriteLine($"Result of {chosenOperation.Name} is {Result}");
@@ -63,7 +74,9 @@ namespace CalculatorLibrary
                 'a' => new Add(),
                 's' => new Subtract(),
                 'm' => new Multiply(),
-                'd' => new Divide()
+                'd' => new Divide(),
+                'r' => new SquareRoot(),
+                'p' => new PowerOf()
             };
             return chosenOperation;
         }

@@ -6,10 +6,17 @@
         private List<double> latestResults = new List<double>();
         public bool ListIsEmpty => latestCalculations.Count == 0;
 
-        public void LogOperation(double leftNumber, double rightNumber, double result, IOperation operation)
+        public void LogOperation(double result, IOperation operation, params double[] numbers)
         {
             latestResults.Add(result);
-            latestCalculations.Add($"{operation.Name} of {leftNumber} and {rightNumber} equals {result}");
+            if(operation.RequiredArguments >1)
+            {
+                latestCalculations.Add($"{operation.Name} of {numbers[0]} and {numbers[1]} equals {result}");
+            }
+            else
+            {
+                latestCalculations.Add($"{operation.Name} of {numbers[0]} equals {result}");
+            }
         }
         public void DeleteLatestCalculationList()
         {

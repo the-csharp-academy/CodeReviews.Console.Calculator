@@ -2,44 +2,67 @@
 {
     public interface IOperation
     {
-        public abstract string Name { get; }
-        public abstract double Execute(double leftNumber, double rightNumber);
+        public string Name { get; }
+        public int RequiredArguments { get; }
+        public double Execute(params double[] numbers);
     }
     public class Add : IOperation
     {
         public string Name => "Addition";
-        public double Execute(double leftNumber, double rightNumber)
+        public int RequiredArguments => 2;
+        public double Execute(params double[] numbers)
         {
-            return leftNumber + rightNumber;
+            return numbers[0] + numbers[1];
         }
     }
     public class Subtract : IOperation
     {
         public string Name => "Subtract";
-        public double Execute(double leftNumber, double rightNumber)
+        public int RequiredArguments => 2;
+        public double Execute(params double[] numbers)
         {
-            return leftNumber - rightNumber;
+            return numbers[0] - numbers[1];
         }
     }
     public class Multiply : IOperation
     {
         public string Name => "Multiply";
-        public double Execute(double leftNumber, double rightNumber)
+        public int RequiredArguments => 2;
+        public double Execute(params double[] numbers)
         {
-            return leftNumber * rightNumber;
+            return numbers[0] * numbers[1];
         }
     }
     public class Divide : IOperation
     {
         public string Name => "Divide";
-        public double Execute(double leftNumber, double rightNumber)
+        public int RequiredArguments => 2;
+        public double Execute(params double[] numbers)
         {
-            if (rightNumber != 0) return leftNumber / rightNumber;
+            if (numbers[1] != 0) return numbers[0] / numbers[1];
             else
             {
                 Console.WriteLine("Can't divide by 0, returning original number");
-                return leftNumber;
+                return numbers[0];
             }
+        }
+    }
+    public class SquareRoot : IOperation
+    {
+        public string Name => "Square Root";
+        public int RequiredArguments => 1;
+        public double Execute(params double[] numbers)
+        {
+            return Math.Sqrt(numbers[0]);
+        }
+    }
+    public class PowerOf : IOperation
+    {
+        public string Name => "Power of";
+        public int RequiredArguments => 2;
+        public double Execute(params double[] numbers)
+        {
+            return Math.Pow(numbers[0], numbers[1]);
         }
     }
 }

@@ -16,13 +16,16 @@ namespace Calculator.PawelNaruszewicz
             writer.WritePropertyName("Operations");
             writer.WriteStartArray();
         }
-        public void LogOperation(double leftNumber, double rightNumber, double result, IOperation operation)
+        public void LogOperation(double result, IOperation operation, params double[] numbers)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("Operand1");
-            writer.WriteValue(leftNumber);
-            writer.WritePropertyName("Operand2");
-            writer.WriteValue(rightNumber);
+            writer.WriteValue(numbers[0]);
+            if(operation.RequiredArguments >1)
+            {
+                writer.WritePropertyName("Operand2");
+                writer.WriteValue(numbers[1]);
+            }
             writer.WritePropertyName("Result");
             writer.WriteValue(result);
             writer.WritePropertyName("Operation");

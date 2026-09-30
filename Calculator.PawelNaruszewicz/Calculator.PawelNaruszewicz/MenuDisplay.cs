@@ -4,13 +4,15 @@
     {
         public char GetChoiceOfOperation()
         {
-            char[] availableChoices = new char[] { 'a', 's', 'm', 'd' };
+            char[] availableChoices = new char[] { 'a', 's', 'm', 'd', 'r', 'p' };
 
             Console.WriteLine("Choose an operator from the following list:");
             Console.WriteLine("\ta - Add");
             Console.WriteLine("\ts - Subtract");
             Console.WriteLine("\tm - Multiply");
             Console.WriteLine("\td - Divide");
+            Console.WriteLine("\tr - Square Root");
+            Console.WriteLine("\tp - Power Of");
             char chosenChar = GetPlayerChoice(availableChoices);
             return chosenChar;
         }
@@ -34,7 +36,7 @@
             while (true)
             {
                 char inputAsChar = '0';
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
 
                 if (!string.IsNullOrWhiteSpace(input))
                 {
@@ -47,6 +49,7 @@
                 }
                 if (availableChoices.Contains(inputAsChar))
                 {
+                    Console.WriteLine();
                     return inputAsChar;
                 }
                 else
@@ -54,8 +57,6 @@
                     Console.WriteLine("Invalid input.");
                 }
             }
-
         }
-
     }
 }
