@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Calculator.whoami3222/">
+    <Project Path="Calculator.whoami3222/Calculator/Calculator.csproj" />
+    <Project Path="Calculator.whoami3222/CalculatorLibrary/CalculatorLibrary.csproj" />
+  </Folder>
+</Solution>
