@@ -34,6 +34,8 @@ while (!endApp)
                 case "d":
                     numberList.Clear();
                     Console.WriteLine("History deleted.\n");
+                    number1 = GetNumberInput("Type a number, and then press Enter: ");
+                    number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
                     validHistoryChoice = true;
                     break;
 
@@ -52,12 +54,11 @@ while (!endApp)
                     break;
             }
         }
-    }
-    
-    if (numberList.Count == 0)
+    } 
+    else
     {
-        number1 = GetNumberInput("Type a number, and then press Enter: ");
-        number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+     number1 = GetNumberInput("Type a number, and then press Enter: ");
+     number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
     }
    
     bool validChooseOp = false;

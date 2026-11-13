@@ -29,7 +29,9 @@ while (!endApp)
 
 
             var choice = await Spechtext.OutputSpeech();
-            string choiceText = choice.Text.Trim().TrimEnd('.').ToLower();
+            string choiceText = Regex.Replace(choice?.Text ?? "", @"[^\w\s]", "")
+                         .Trim()
+                         .ToLowerInvariant();
 
             switch (choiceText)
             {

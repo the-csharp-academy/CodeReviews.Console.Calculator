@@ -34,23 +34,23 @@ namespace CalculatorLibrary
             writer.WritePropertyName("Operation");
             switch (op)
             {
-                case "1":
+                case "a":
                     result = num1 + num2;
                     writer.WriteValue("Add");
                     break;
-                case "2":
+                case "s":
                     result = num1 - num2;
                     writer.WriteValue("Subtract");
                     break;
-                case "3":
+                case "m":
                     result = num1 * num2;
                     writer.WriteValue("Multiply");
                     break;
-                case "6":
+                case "p":
                     result = Math.Pow(num1,num2);
                     writer.WriteValue("Pow");
                     break;
-                case "4":
+                case "d":
                     if (num2 != 0)
                     {
                         result = num1 / num2;
@@ -77,23 +77,23 @@ namespace CalculatorLibrary
             writer.WritePropertyName("Operation");
             switch (op)
             {
-                case "5":
+                case "sq":
                     result = Math.Sqrt(num1);
                     writer.WriteValue("Square Root");
                     break;
-                case "7":
+                case "10":
                     result = Math.Pow(10,num1);
                     writer.WriteValue("Pow 10");
                     break;
-                case "8":
+                case "sin":
                     result = Math.Sin(num1 * Math.PI / 180);
                     writer.WriteValue("Seno");
                     break;
-                case "9":
+                case "cos":
                     result = Math.Cos(num1 * Math.PI / 180);
                     writer.WriteValue("Cosseno");
                     break;
-                case "10":
+                case "tan":
                     result = Math.Tan(num1 * Math.PI / 180);
                     writer.WriteValue("Tangente");
                     break;
