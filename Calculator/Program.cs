@@ -48,7 +48,7 @@ while (!endApp)
    string? op = Console.ReadLine();
 
    // Validate input is not null, and matches the pattern
-   if (op == null || !Regex.IsMatch(op, "^(a|s|m|d)$"))
+   if (op == null || !Regex.IsMatch(op, "^(a|s|m|d|u)$"))
    {
       Console.WriteLine("Error: Unrecognized input.");
    }
@@ -71,8 +71,17 @@ while (!endApp)
    Console.WriteLine("------------------------\n");
 
    // Wait for the user to respond before closing.
-   Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-   if (Console.ReadLine() == "n") endApp = true;
+   Console.Write("Press 'n' and Enter to close the app, press 'u' to show calculator usage, or press any other key and Enter to continue: ");
+
+   switch (Console.ReadLine())
+   {
+      case "n":
+         endApp = true;
+         break;
+      case "u":
+         calculator.ShowUsage();
+         break;
+   }
 
    Console.WriteLine("\n"); // Friendly linespacing.
 }

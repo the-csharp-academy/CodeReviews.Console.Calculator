@@ -5,6 +5,7 @@ namespace CalculatorLibrary;
 
 public class Calculator
 {
+    int usage;
     JsonWriter writer;
     public Calculator()
     {
@@ -17,6 +18,8 @@ public class Calculator
         writer.WriteStartObject();
         writer.WritePropertyName("Operations");
         writer.WriteStartArray();
+
+        usage = 0;
     }
     // CalculatorLibrary.cs
     public double DoOperation(double num1, double num2, string op)
@@ -59,7 +62,14 @@ public class Calculator
         writer.WriteValue(result);
         writer.WriteEndObject();
 
+        usage++;
+
         return result;
+    }
+
+    public void ShowUsage()
+    {
+        Console.WriteLine(string.Format("\n\tCalculator was used {0} times", usage));
     }
 
     public void Finish()
