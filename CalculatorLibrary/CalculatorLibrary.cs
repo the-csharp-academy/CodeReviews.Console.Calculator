@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace CalculatorLibrary;
@@ -8,6 +9,8 @@ public class Calculator
     int usage;
     JsonWriter writer;
     readonly List<(string equation, double result)> calculationHistory;
+    double num1;
+    double num2;
     public Calculator()
     {
         StreamWriter logFile = File.CreateText("calculator.log");
@@ -22,9 +25,12 @@ public class Calculator
 
         usage = 0;
         calculationHistory = [];
+
+        num1 = 0;
+        num2 = 0;
     }
     // CalculatorLibrary.cs
-    public double DoOperation(double num1, double num2, string op)
+    public double DoOperation(string op)
     {
         double result = double.NaN; // Default value is "not-a-number" if an operation, such as division, could result in an error.
         writer.WriteStartObject();
@@ -95,6 +101,66 @@ public class Calculator
         }
     }
 
+    public void EnterNumbers()
+    {
+        // Ask the user to type the first number.
+        Console.Write("Type a number, and then press Enter: ");
+        string? numInput1 = Console.ReadLine();
+
+        while (!double.TryParse(numInput1, out num1))
+        {
+            Console.Write("This is not valid input. Please enter a numeric value: ");
+            numInput1 = Console.ReadLine();
+        }
+
+        // Ask the user to type the second number.
+        Console.Write("Type another number, and then press Enter: ");
+        string? numInput2 = Console.ReadLine();
+
+        while (!double.TryParse(numInput2, out num2))
+        {
+            Console.Write("This is not valid input. Please enter a numeric value: ");
+            numInput2 = Console.ReadLine();
+        }
+    }
+
+    public void ChooseNumbersFromHistoryList()
+    {
+        if (calculationHistory.Count == 0)
+        {
+            throw new IndexOutOfRangeException("No history yet");
+        }
+        for (int i = 0; i < calculationHistory.Count; i++)
+        {
+            Console.WriteLine($"\t{i + 1}. {calculationHistory[i].equation} = {calculationHistory[i].result}");
+        }
+        Console.WriteLine();
+
+        int indexNum1 = 0;
+        int indexNum2 = 0;
+
+        Console.Write("Enter equation number to use result => ");
+        string? numInput1 = Console.ReadLine();
+
+        while (!int.TryParse(numInput1, out indexNum1) || indexNum1 > calculationHistory.Count || indexNum1 <= 0)
+        {
+            Console.Write("This is not valid input. Please enter a numeric value: ");
+            numInput1 = Console.ReadLine();
+        }
+
+        // Ask the user to type the second number.
+        Console.Write("Enter equation number to use result => ");
+        string? numInput2 = Console.ReadLine();
+
+        while (!int.TryParse(numInput2, out indexNum2) || indexNum2 > calculationHistory.Count || indexNum2 <= 0)
+        {
+            Console.Write("This is not valid input. Please enter a numeric value: ");
+            numInput2 = Console.ReadLine();
+        }
+
+        num1 = calculationHistory[indexNum1 - 1].result;
+        num2 = calculationHistory[indexNum2 - 1].result;
+    }
     public void Finish()
     {
         writer.WriteEndArray();
