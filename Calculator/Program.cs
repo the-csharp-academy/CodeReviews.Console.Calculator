@@ -71,7 +71,10 @@ while (!endApp)
    Console.WriteLine("------------------------\n");
 
    // Wait for the user to respond before closing.
-   Console.Write("Press 'n' and Enter to close the app, press 'u' to show calculator usage, or press any other key and Enter to continue: ");
+   Console.WriteLine("\tn - Exit");
+   Console.WriteLine("\tu - Calculator usage");
+   Console.WriteLine("\th - Calculation history");
+   Console.Write("Your option? ");
 
    switch (Console.ReadLine())
    {
@@ -80,6 +83,9 @@ while (!endApp)
          break;
       case "u":
          calculator.ShowUsage();
+         break;
+      case "h":
+         calculator.ShowHistory();
          break;
    }
 
